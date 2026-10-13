@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Activities Main Menu</title>
+</head>
+<body>
+    <h1>JavaScript Activities Main Menu</h1>
+    <h3>Main Menu</h3>
+
+    <button type="button" onclick="showActivity('setArrayActivity')">1. Set and Array</button>
+    <button type="button" onclick="showActivity('whileLoopActivity')">2. While Loop Array</button>
+    <button type="button" onclick="showActivity('enrollmentActivity')">3. Student Enrollment</button>
+    <button type="button" onclick="showActivity('quizActivity')">4. JavaScript Quiz</button>
+    <button type="button" onclick="showActivity('schoolSearchActivity')">5. School Search</button>
+    <button type="button" onclick="showActivity('gradeCheckerActivity')">6. Student Grade Checker</button>
+    <button type="button" onclick="showActivity('countdownActivity')">7. JavaScript Countdown Timer</button>
+    <button type="button" onclick="showHome()">Home</button>
+    <hr>
+
+    <section id="homeActivity">
+        <h3>Welcome!</h3>
+        <p>Select an activity from the Main Menu above.</p>
+    </section>
+
+    <section id="setArrayActivity" hidden>
+        <h3>Set and Array Activity</h3>
+
+        <h4>Set</h4>
+        <input type="text" id="setItemInput" placeholder="Enter an item" aria-label="Item to add to or remove from Set">
+        <button type="button" onclick="addSetItem()">Add to Set</button>
+        <button type="button" onclick="removeSetItem()">Remove</button>
+        <button type="button" onclick="clearSetItems()">Clear Set</button>
+        <p id="setStatus" aria-live="polite"></p>
+        <p>Items in Set:</p>
+        <p id="setEmptyMessage">No items.</p>
+        <ul id="setItemsList"></ul>
+        <p>Set Size: <span id="setSize">0</span></p>
+
+        <h4>Array</h4>
+        <input type="text" id="arrayItemInput" placeholder="Enter an item" aria-label="Item to add to or remove from Array">
+        <button type="button" onclick="addArrayItem()">Add to Array</button>
+        <button type="button" onclick="removeArrayItem()">Remove</button>
+        <button type="button" onclick="clearArrayItems()">Clear Array</button>
+        <p id="arrayStatus" aria-live="polite"></p>
+        <p>Items in Array:</p>
+        <ul id="arrayItemsList"></ul>
+        <p>Array Length: <span id="arrayLength">0</span></p>
+    </section>
+
+    <section id="whileLoopActivity" hidden>
+        <h3>While Loop - Array Activity</h3>
+        <input type="text" id="whileItemInput" placeholder="Enter an item" aria-label="Item to add to the while loop array">
+        <button type="button" onclick="addWhileItem()">Add Item</button>
+        <button type="button" onclick="stopWhileActivity()">Stop</button>
+        <p>Items:</p>
+        <ul id="whileItemsList"></ul>
+        <p>Total Items: <span id="whileItemsCount">0</span></p>
+        <p id="whileStatus" aria-live="polite">Program is running...</p>
+        <button type="button" onclick="restartWhileActivity()">Restart Activity</button>
+    </section>
+
+    <section id="enrollmentActivity" hidden>
+        <h3>Student Enrollment System</h3>
+        <p>
+            <label for="studentNameInput">Student Name:</label>
+            <input type="text" id="studentNameInput" placeholder="Enter student name">
+        </p>
+        <p>
+            <label for="enrollmentSubject">Select Subject:</label>
+            <select id="enrollmentSubject" onchange="showEnrolledStudents()">
+                <option value="JavaScript">JavaScript</option>
+                <option value="Web Development">Web Development</option>
+                <option value="Database Management">Database Management</option>
+            </select>
+        </p>
+        <button type="button" onclick="enrollStudent()">Enroll Student</button>
+        <button type="button" onclick="showEnrolledStudents()">Show Students</button>
+        <button type="button" onclick="clearSelectedSubject()">Clear Subject List</button>
+        <h4>Enrollment Status:</h4>
+        <p id="enrollmentStatus" aria-live="polite"></p>
+        <h4>Students Enrolled in Selected Subject:</h4>
+        <p id="enrollmentSubjectHeading">JavaScript</p>
+        <ol id="enrolledStudentsList"></ol>
+    </section>
+
+    <section id="quizActivity" hidden>
+        <h3>JavaScript Quiz Game</h3>
+        <p id="quizQuestion">Question 1: What is the correct way to declare a variable in JavaScript?</p>
+        <div id="quizAnswers"></div>
+        <p id="quizFeedback" aria-live="polite"></p>
+        <p>Score: <span id="quizScore">0</span></p>
+        <p id="quizFinalScore" hidden></p>
+        <button type="button" id="nextQuestionButton" onclick="nextQuizQuestion()" disabled>Next Question</button>
+        <button type="button" onclick="restartQuiz()">Restart Quiz</button>
+    </section>
+
+    <section id="schoolSearchActivity" hidden>
+        <h3>School Search Program</h3>
+        <input type="text" id="schoolNameInput" placeholder="Enter school name" aria-label="School name">
+        <button type="button" onclick="searchSchool()">Search</button>
+        <p id="schoolSearchResult" aria-live="polite"></p>
+        <p>Schools in the list: Arellano, Ateneo, FEU, JRU, RTU</p>
+    </section>
+
+    <section id="gradeCheckerActivity" hidden>
+        <h3>Student Grade Checker</h3>
+        <label for="studentGradeInput">Enter your grade:</label>
+        <input type="number" id="studentGradeInput" min="0" max="100" step="any" placeholder="Enter grade">
+        <button type="button" onclick="checkStudentGrade()">Check</button>
+        <p id="gradeCheckerResult" aria-live="polite"></p>
+        <p>Passing grade: 75</p>
+    </section>
+
+    <section id="countdownActivity" hidden>
+        <h3>Countdown Timer</h3>
+        <p>
+            <label for="timerStartInput">Starting time in seconds:</label>
+            <input type="number" id="timerStartInput" min="1" step="1" value="60">
+        </p>
+        <p>Time Remaining: <span id="timerDisplay">60</span> seconds</p>
+        <p id="timerStatus" aria-live="polite">Ready to start.</p>
+        <button type="button" onclick="startCountdown()">Start</button>
+        <button type="button" onclick="pauseCountdown()">Pause</button>
+        <button type="button" onclick="resumeCountdown()">Resume</button>
+        <button type="button" onclick="resetCountdown()">Reset</button>
+    </section>
+
+    <script>
+        const activityIds = [
+            'setArrayActivity',
+            'whileLoopActivity',
+            'enrollmentActivity',
+            'quizActivity',
+            'schoolSearchActivity',
+            'gradeCheckerActivity',
+            'countdownActivity'
+        ];
+
+        function showActivity(activityId) {
+            document.getElementById('homeActivity').hidden = true;
+            activityIds.forEach(function (id) {
+                document.getElementById(id).hidden = id !== activityId;
+            });
+        }
+
+        function showHome() {
+            activityIds.forEach(function (id) {
+                document.getElementById(id).hidden = true;
+            });
+            document.getElementById('homeActivity').hidden = false;
+        }
+
+        const itemSet = new Set();
+        const itemArray = [];
+
+        function renderSetItems() {
+            const list = document.getElementById('setItemsList');
+            list.replaceChildren();
+            itemSet.forEach(function (item) {
+                const li = document.createElement('li');
+                li.textContent = item;
+                list.appendChild(li);
+            });
+            document.getElementById('setSize').textContent = itemSet.size;
+            document.getElementById('setEmptyMessage').hidden = itemSet.size !== 0;
+        }
+
+        function renderArrayItems() {
+            const list = document.getElementById('arrayItemsList');
+            list.replaceChildren();
+            itemArray.forEach(function (item) {
+                const li = document.createElement('li');
+                li.textContent = item;
+                list.appendChild(li);
+            });
+            document.getElementById('arrayLength').textContent = itemArray.length;
+        }
+
+        function addSetItem() {
+            const input = document.getElementById('setItemInput');
+            const item = input.value.trim();
+            const status = document.getElementById('setStatus');
+            if (item === '') {
+                status.textContent = 'Please enter an item.';
+                return;
+            }
+            if (itemSet.has(item)) {
+                status.textContent = 'Item already exists in the Set.';
+                return;
+            }
+            itemSet.add(item);
+            renderSetItems();
+            status.textContent = 'Item added to Set.';
+        }
+
+        function removeSetItem() {
+            const item = document.getElementById('setItemInput').value.trim();
+            const status = document.getElementById('setStatus');
+            if (item === '') {
+                status.textContent = 'Enter an item to remove.';
+                return;
+            }
+            status.textContent = itemSet.delete(item) ? 'Item removed from Set.' : 'Item not found in Set.';
+            renderSetItems();
+        }
+
+        function clearSetItems() {
+            itemSet.clear();
+            renderSetItems();
+            document.getElementById('setStatus').textContent = 'Set cleared.';
+        }
+
+        function addArrayItem() {
+            const input = document.getElementById('arrayItemInput');
+            const item = input.value.trim();
+            const status = document.getElementById('arrayStatus');
+            if (item === '') {
+                status.textContent = 'Please enter an item.';
+                return;
+            }
+            itemArray.push(item);
+            renderArrayItems();
+            status.textContent = 'Item added to Array.';
+        }
+
+        function removeArrayItem() {
+            const item = document.getElementById('arrayItemInput').value.trim();
+            const status = document.getElementById('arrayStatus');
+            if (item === '') {
+                status.textContent = 'Enter an item to remove.';
+                return;
+            }
+            const index = itemArray.indexOf(item);
+            if (index === -1) {
+                status.textContent = 'Item not found in Array.';
+            } else {
+                itemArray.splice(index, 1);
+                status.textContent = 'Item removed from Array.';
+            }
+            renderArrayItems();
+        }
+
+        function clearArrayItems() {
+            itemArray.length = 0;
+            renderArrayItems();
+            document.getElementById('arrayStatus').textContent = 'Array cleared.';
+        }
+
+        let whileItems = [];
+        let whileActivityStopped = false;
+
+        function renderWhileItems() {
+            const list = document.getElementById('whileItemsList');
+            list.replaceChildren();
+            let i = 0;
+            while (i < whileItems.length) {
+                const li = document.createElement('li');
+                li.textContent = whileItems[i];
+                list.appendChild(li);
+                i++;
+            }
+            document.getElementById('whileItemsCount').textContent = whileItems.length;
+        }
+
+        function addWhileItem() {
+            const status = document.getElementById('whileStatus');
+            const input = document.getElementById('whileItemInput');
+            const item = input.value.trim();
+            if (whileActivityStopped) {
+                status.textContent = 'Program is stopped. Press Restart Activity to continue.';
+                return;
+            }
+            if (item === '') {
+                status.textContent = 'Please enter an item.';
+                return;
+            }
+            whileItems.push(item);
+            renderWhileItems();
+            input.value = '';
+            status.textContent = 'Program is running...';
+        }
+
+        function stopWhileActivity() {
+            whileActivityStopped = true;
+            document.getElementById('whileStatus').textContent = 'Program is stopped.';
+        }
+
+        function restartWhileActivity() {
+            whileItems = [];
+            whileActivityStopped = false;
+            document.getElementById('whileItemInput').value = '';
+            renderWhileItems();
+            document.getElementById('whileStatus').textContent = 'Program is running...';
+        }
+
+        const enrollments = {
+            'JavaScript': [],
+            'Web Development': [],
+            'Database Management': []
+        };
+
+        function getSelectedSubject() {
+            return document.getElementById('enrollmentSubject').value;
+        }
+
+        function showEnrolledStudents() {
+            const subject = getSelectedSubject();
+            const students = enrollments[subject];
+            const list = document.getElementById('enrolledStudentsList');
+            list.replaceChildren();
+            document.getElementById('enrollmentSubjectHeading').textContent = subject;
+            if (students.length === 0) {
+                const li = document.createElement('li');
+                li.textContent = 'No students enrolled in ' + subject + '.';
+                list.appendChild(li);
+                return;
+            }
+            students.forEach(function (student) {
+                const li = document.createElement('li');
+                li.textContent = student;
+                list.appendChild(li);
+            });
+        }
+
+        function enrollStudent() {
+            const nameInput = document.getElementById('studentNameInput');
+            const studentName = nameInput.value.trim();
+            const subject = getSelectedSubject();
+            const status = document.getElementById('enrollmentStatus');
+            if (studentName === '') {
+                status.textContent = 'Please enter the student name.';
+                return;
+            }
+            const alreadyEnrolled = enrollments[subject].some(function (name) {
+                return name.toLowerCase() === studentName.toLowerCase();
+            });
+            if (alreadyEnrolled) {
+                status.textContent = 'This student is already enrolled in ' + subject + '.';
+                return;
+            }
+            enrollments[subject].push(studentName);
+            status.textContent = 'Student successfully enrolled!';
+            nameInput.value = '';
+            showEnrolledStudents();
+        }
+
+        function clearSelectedSubject() {
+            const subject = getSelectedSubject();
+            enrollments[subject].length = 0;
+            showEnrolledStudents();
+            document.getElementById('enrollmentStatus').textContent = 'Enrollment list cleared for ' + subject + '.';
+        }
+
+        const quizQuestions = [
+            {
+                question: 'Question 1: What is the correct way to declare a variable in JavaScript?',
+                answers: ['var x', 'variable x', 'declare x', 'int x'],
+                correctIndex: 0
+            },
+            {
+                question: 'Question 2: Which keyword can declare a block-scoped variable?',
+                answers: ['let', 'define', 'dim', 'style'],
+                correctIndex: 0
+            },
+            {
+                question: 'Question 3: Which array method adds an item to the end of an array?',
+                answers: ['pop()', 'push()', 'shift()', 'join()'],
+                correctIndex: 1
+            },
+            {
+                question: 'Question 4: Which HTML tag is used to include JavaScript code in a web page?',
+                answers: ['<javascript>', '<js>', '<script>', '<codejs>'],
+                correctIndex: 2
+            },
+            {
+                question: 'Question 5: Which value is a Boolean value representing false?',
+                answers: ['false', '"false"', '"0"', 'undefined'],
+                correctIndex: 0
+            }
+        ];
+        let quizIndex = 0;
+        let quizScoreValue = 0;
+        let quizAnswered = false;
+
+        function renderQuizQuestion() {
+            const question = quizQuestions[quizIndex];
+            const answersContainer = document.getElementById('quizAnswers');
+            answersContainer.replaceChildren();
+            document.getElementById('quizQuestion').textContent = question.question;
+            document.getElementById('quizFeedback').textContent = '';
+            document.getElementById('quizScore').textContent = quizScoreValue;
+            document.getElementById('nextQuestionButton').disabled = true;
+            document.getElementById('nextQuestionButton').textContent = 'Next Question';
+            document.getElementById('quizFinalScore').hidden = true;
+            quizAnswered = false;
+
+            question.answers.forEach(function (answer, answerIndex) {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = answer;
+                button.addEventListener('click', function () {
+                    chooseQuizAnswer(answerIndex);
+                });
+                answersContainer.appendChild(button);
+                answersContainer.appendChild(document.createTextNode(' '));
+            });
+        }
+
+        function chooseQuizAnswer(answerIndex) {
+            if (quizAnswered) {
+                return;
+            }
+            quizAnswered = true;
+            const question = quizQuestions[quizIndex];
+            const buttons = document.getElementById('quizAnswers').querySelectorAll('button');
+            buttons.forEach(function (button) {
+                button.disabled = true;
+            });
+            if (answerIndex === question.correctIndex) {
+                quizScoreValue++;
+                document.getElementById('quizFeedback').textContent = 'Correct!';
+            } else {
+                document.getElementById('quizFeedback').textContent = 'Incorrect. The correct answer is: ' + question.answers[question.correctIndex];
+            }
+            document.getElementById('quizScore').textContent = quizScoreValue;
+            if (quizIndex === quizQuestions.length - 1) {
+                document.getElementById('quizFinalScore').textContent = 'Final Score: ' + quizScoreValue + ' out of ' + quizQuestions.length + '.';
+                document.getElementById('quizFinalScore').hidden = false;
+                document.getElementById('nextQuestionButton').disabled = true;
+                document.getElementById('nextQuestionButton').textContent = 'Quiz Completed';
+            } else {
+                document.getElementById('nextQuestionButton').disabled = false;
+            }
+        }
+
+        function nextQuizQuestion() {
+            if (!quizAnswered || quizIndex >= quizQuestions.length - 1) {
+                return;
+            }
+            quizIndex++;
+            renderQuizQuestion();
+        }
+
+        function restartQuiz() {
+            quizIndex = 0;
+            quizScoreValue = 0;
+            renderQuizQuestion();
+        }
+
+        const schoolNames = ['Arellano', 'Ateneo', 'FEU', 'JRU', 'RTU'];
+
+        function searchSchool() {
+            const schoolName = document.getElementById('schoolNameInput').value.trim();
+            const result = document.getElementById('schoolSearchResult');
+            if (schoolName === '') {
+                result.textContent = 'Please enter a school name.';
+                return;
+            }
+            const found = schoolNames.some(function (school) {
+                return school.toLowerCase() === schoolName.toLowerCase();
+            });
+            result.textContent = found ? 'School Found!' : 'School Not Found!';
+        }
+
+        function checkStudentGrade() {
+            const input = document.getElementById('studentGradeInput');
+            const result = document.getElementById('gradeCheckerResult');
+            if (input.value.trim() === '') {
+                result.textContent = 'Please enter your grade.';
+                return;
+            }
+            const grade = Number(input.value);
+            if (!Number.isFinite(grade) || grade < 0 || grade > 100) {
+                result.textContent = 'Invalid grade. Enter a grade from 0 to 100.';
+                return;
+            }
+            result.textContent = grade >= 75 ? 'Congratulations! You Passed.' : 'Sorry! You Failed.';
+        }
+
+        let timerRemaining = 60;
+        let timerInterval = null;
+        let timerPaused = false;
+        let timerFinished = false;
+
+        function renderTimer() {
+            document.getElementById('timerDisplay').textContent = timerRemaining;
+        }
+
+        function getSelectedStartingTime() {
+            const input = document.getElementById('timerStartInput');
+            const rawValue = input.value.trim();
+            const value = Number(rawValue);
+            if (rawValue === '' || !Number.isFinite(value) || !Number.isInteger(value) || value < 1) {
+                document.getElementById('timerStatus').textContent = 'Enter a whole number of seconds greater than 0.';
+                return null;
+            }
+            return value;
+        }
+
+        function stopTimerInterval() {
+            if (timerInterval !== null) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        function runTimerInterval() {
+            stopTimerInterval();
+            timerPaused = false;
+            timerFinished = false;
+            timerInterval = setInterval(function () {
+                timerRemaining--;
+                renderTimer();
+                if (timerRemaining <= 0) {
+                    timerRemaining = 0;
+                    renderTimer();
+                    stopTimerInterval();
+                    timerPaused = false;
+                    timerFinished = true;
+                    document.getElementById('timerStatus').textContent = "Time's Up!";
+                }
+            }, 1000);
+        }
+
+        function startCountdown() {
+            if (timerInterval !== null) {
+                document.getElementById('timerStatus').textContent = 'Countdown is already running.';
+                return;
+            }
+            const startTime = getSelectedStartingTime();
+            if (startTime === null) {
+                return;
+            }
+            timerRemaining = startTime;
+            renderTimer();
+            document.getElementById('timerStatus').textContent = 'Countdown started.';
+            runTimerInterval();
+        }
+
+        function pauseCountdown() {
+            if (timerInterval === null) {
+                document.getElementById('timerStatus').textContent = timerPaused ? 'Countdown is already paused.' : 'Countdown is not running.';
+                return;
+            }
+            stopTimerInterval();
+            timerPaused = true;
+            document.getElementById('timerStatus').textContent = 'Countdown paused.';
+        }
+
+        function resumeCountdown() {
+            if (!timerPaused) {
+                document.getElementById('timerStatus').textContent = 'Pause the countdown before using Resume.';
+                return;
+            }
+            if (timerRemaining <= 0) {
+                timerPaused = false;
+                timerFinished = true;
+                document.getElementById('timerStatus').textContent = "Time's Up! Use Reset to start again.";
+                return;
+            }
+            document.getElementById('timerStatus').textContent = 'Countdown resumed.';
+            runTimerInterval();
+        }
+
+        function resetCountdown() {
+            stopTimerInterval();
+            timerPaused = false;
+            timerFinished = false;
+            const startTime = getSelectedStartingTime();
+            if (startTime === null) {
+                return;
+            }
+            timerRemaining = startTime;
+            renderTimer();
+            document.getElementById('timerStatus').textContent = 'Timer reset.';
+        }
+
+        renderSetItems();
+        renderArrayItems();
+        renderWhileItems();
+        showEnrolledStudents();
+        renderQuizQuestion();
+        renderTimer();
+    </script>
+</body>
+</html>
